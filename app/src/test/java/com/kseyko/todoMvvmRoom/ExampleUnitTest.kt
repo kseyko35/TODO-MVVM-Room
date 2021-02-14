@@ -1,4 +1,4 @@
-package com.kseyko.todo_mvvm_room
+package com.kseyko.todoMvvmRoom
 
 import org.junit.Test
 

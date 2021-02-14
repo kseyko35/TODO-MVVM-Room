@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'kotlin-parcelize'
+    id 'kotlin-parcelize' // this is for parcelable and it is newly
 }
 
 android {
@@ -12,7 +12,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.kseyko.todo_mvvm_room"
+        applicationId "com.kseyko.todoMvvmRoom"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1

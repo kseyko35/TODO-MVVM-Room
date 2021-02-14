@@ -1,4 +1,4 @@
-package com.kseyko.todo_mvvm_room
+package com.kseyko.todoMvvmRoom
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
