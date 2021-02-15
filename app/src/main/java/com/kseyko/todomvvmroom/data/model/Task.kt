@@ -1,4 +1,4 @@
-package com.kseyko.todomvvmroom.data
+package com.kseyko.todomvvmroom.data.model
 
 
 import android.os.Parcelable
@@ -26,7 +26,7 @@ data class Task(
     val completed: Boolean = false,
 
     @PrimaryKey(autoGenerate = true) val id: Int = 0
-): Parcelable {
+) : Parcelable {
     val createdDateFormatted: String
         get() = DateFormat.getDateTimeInstance().format(created)
 }
