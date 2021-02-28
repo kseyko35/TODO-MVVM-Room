@@ -22,7 +22,8 @@ import javax.inject.Provider
  */
 @Database(
     entities = [Task::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )//This is how we can update database later if we change schema of it
 abstract class TaskDatabase : RoomDatabase() {
 
