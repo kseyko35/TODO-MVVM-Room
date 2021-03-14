@@ -1,5 +1,6 @@
 package com.kseyko.todomvvmroom.ui.adapter
 
+import android.content.ReceiverCallNotAllowedException
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -19,11 +20,30 @@ import com.kseyko.todomvvmroom.databinding.ItemTaskBinding
 ║      17,February,2021      ║
 ╚════════════════════════════╝
  */
-class TaskAdapter : ListAdapter<Task, TaskAdapter.TasksViewHolder>(DiffCallBack()) {
+class TaskAdapter(private val listener: onItemClickListener ) : ListAdapter<Task, TaskAdapter.TasksViewHolder>(DiffCallBack()) {
 
 
-    class TasksViewHolder(private val binding: ItemTaskBinding) :
+    inner class TasksViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+             binding.apply {
+                 root.setOnClickListener{
+                     val position = adapterPosition
+                     if(position!=RecyclerView.NO_POSITION){
+                         val task= getItem(position)
+                         listener.onItemClick(task)
+                     }
+                 }
+                 checkBoxCompleted.setOnClickListener{
+                     val position = adapterPosition
+                     if(position!= RecyclerView.NO_POSITION){
+                         val task= getItem(position)
+                         listener.onCheckBoxClick(task,checkBoxCompleted.isChecked)
+                     }
+                 }
+             }
+        }
         fun bind(task: Task) {
             binding.apply {
                 checkBoxCompleted.isChecked = task.completed
@@ -32,6 +52,11 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.TasksViewHolder>(DiffCallBack(
                 imageViewPriority.isVisible = task.important
             }
         }
+    }
+
+    interface onItemClickListener{
+        fun onItemClick(task: Task)
+        fun onCheckBoxClick(task: Task,isChecked: Boolean)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {

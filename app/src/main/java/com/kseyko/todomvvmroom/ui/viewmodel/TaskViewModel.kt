@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.kseyko.todomvvmroom.data.PreferencesManager
 import com.kseyko.todomvvmroom.data.SortOrder
 import com.kseyko.todomvvmroom.data.local.TaskDao
+import com.kseyko.todomvvmroom.data.model.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -50,13 +51,22 @@ class TaskViewModel @Inject constructor(
             filterPreferences.hideCompleted
         )
     }
-    fun onSortOrderSlected(sortOrder: SortOrder)= viewModelScope.launch {
+
+    val tasks = tasksFlow.asLiveData()
+
+    fun onSortOrderSelected(sortOrder: SortOrder)= viewModelScope.launch {
         preferencesManager.updateSortOrder(sortOrder)
     }
     fun onHideCompletedClick(hideCompleted:Boolean)= viewModelScope.launch {
         preferencesManager.updateHideCompleted(hideCompleted)
     }
+    fun onTaskSelected(task:Task){
+
+    }
+    fun onTaskCheckedChanged(task:Task, isChecked:Boolean) = viewModelScope.launch {
+        taskDao.update(task.copy(completed = isChecked ))
+    }
 
 
-    val tasks = tasksFlow.asLiveData()
+
 }

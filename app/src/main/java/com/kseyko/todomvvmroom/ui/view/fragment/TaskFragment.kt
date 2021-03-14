@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kseyko.todomvvmroom.R
 import com.kseyko.todomvvmroom.data.SortOrder
+import com.kseyko.todomvvmroom.data.model.Task
 import com.kseyko.todomvvmroom.databinding.FragmentTaskBinding
 import com.kseyko.todomvvmroom.ui.adapter.TaskAdapter
 //import com.kseyko.todomvvmroom.ui.viewmodel.SortOrder
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class TaskFragment : Fragment(R.layout.fragment_task) {
+class TaskFragment : Fragment(R.layout.fragment_task), TaskAdapter.onItemClickListener {
 
     private val viewModel: TaskViewModel by viewModels()
 
@@ -32,7 +33,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         val binding = FragmentTaskBinding.bind(view)
 
-        val taskAdapter = TaskAdapter()
+        val taskAdapter = TaskAdapter(this)
 
         binding.apply {
             recyclerviewTask.apply {
@@ -70,11 +71,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         return when (item.itemId) {
             R.id.action_sort_by_name -> {
                 // viewModel.sortOrder.value = SortOrder.BY_NAME
-                viewModel.onSortOrderSlected(SortOrder.BY_NAME)
+                viewModel.onSortOrderSelected(SortOrder.BY_NAME)
                 true
             }
             R.id.action_sort_by_created -> {
-                viewModel.onSortOrderSlected(SortOrder.BY_DATE)
+                viewModel.onSortOrderSelected(SortOrder.BY_DATE)
                 //viewModel.sortOrder.value = SortOrder.BY_DATE
                 true
             }
@@ -89,6 +90,14 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onItemClick(task: Task) {
+        viewModel.onTaskSelected(task)
+    }
+
+    override fun onCheckBoxClick(task: Task, isChecked: Boolean) {
+        viewModel.onTaskCheckedChanged(task,isChecked)
     }
 }
 
