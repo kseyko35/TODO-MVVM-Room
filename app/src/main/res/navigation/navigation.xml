@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.kseyko.todomvvmroom.ui.fragment.TaskFragment"
+        android:name="com.kseyko.todomvvmroom.ui.view.fragment.TaskFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" />
     <fragment
         android:id="@+id/editAddTaskFragment"
-        android:name="com.kseyko.todomvvmroom.ui.fragment.EditAddTaskFragment"
+        android:name="com.kseyko.todomvvmroom.ui.view.fragment.EditAddTaskFragment"
         android:label="fragment_edit_add_task"
         tools:layout="@layout/fragment_edit_add_task" />
 </navigation>

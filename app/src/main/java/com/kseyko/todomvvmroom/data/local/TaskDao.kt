@@ -1,8 +1,9 @@
 package com.kseyko.todomvvmroom.data.local
 
 import androidx.room.*
+import com.kseyko.todomvvmroom.data.SortOrder
 import com.kseyko.todomvvmroom.data.model.Task
-import com.kseyko.todomvvmroom.ui.viewmodel.SortOrder
+//import com.kseyko.todomvvmroom.ui.viewmodel.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 

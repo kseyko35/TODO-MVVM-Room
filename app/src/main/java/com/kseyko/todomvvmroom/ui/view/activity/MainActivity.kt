@@ -1,4 +1,4 @@
-package com.kseyko.todomvvmroom.ui.activity
+package com.kseyko.todomvvmroom.ui.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
