@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.kseyko.todomvvmroom.databinding.FragmentTaskBinding
 import com.kseyko.todomvvmroom.ui.adapter.TaskAdapter
 //import com.kseyko.todomvvmroom.ui.viewmodel.SortOrder
 import com.kseyko.todomvvmroom.ui.viewmodel.TaskViewModel
+import com.kseyko.todomvvmroom.util.exhaustive
 import com.kseyko.todomvvmroom.util.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -61,6 +63,10 @@ class TaskFragment : Fragment(R.layout.fragment_task), TaskAdapter.onItemClickLi
                     viewModel.onTaskSwiped(task)
                 }
             }).attachToRecyclerView(recyclerviewTask)//we have to attach to recyclerview to work together
+
+            fabAddTask.setOnClickListener {
+                 viewModel.onAddNewTaskClick()
+            }
         }
         viewModel.tasks.observe(viewLifecycleOwner) {
             taskAdapter.submitList(it)
@@ -75,7 +81,15 @@ class TaskFragment : Fragment(R.layout.fragment_task), TaskAdapter.onItemClickLi
                                 viewModel.onUndoDeleteClick(event.task)
                             }.show()
                     }
-                }
+                    TaskViewModel.TasksEvent.NavigateToAddTaskScreen -> {
+                        val action= TaskFragmentDirections.actionTaskFragmentToEditAddTaskFragment(null,"New Task")
+                        findNavController().navigate(action)
+                    }
+                    is TaskViewModel.TasksEvent.NavigateToEditTaskScreen -> {
+                        val action= TaskFragmentDirections.actionTaskFragmentToEditAddTaskFragment(event.task, "Edit Task")
+                        findNavController().navigate(action)
+                    }
+                }.exhaustive
             }
         }
 

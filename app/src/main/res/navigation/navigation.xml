@@ -8,11 +8,22 @@
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.kseyko.todomvvmroom.ui.view.fragment.TaskFragment"
-        android:label="fragment_task"
-        tools:layout="@layout/fragment_task" />
+        android:label="Todo List"
+        tools:layout="@layout/fragment_task">
+        <action
+            android:id="@+id/action_taskFragment_to_editAddTaskFragment"
+            app:destination="@id/editAddTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editAddTaskFragment"
         android:name="com.kseyko.todomvvmroom.ui.view.fragment.EditAddTaskFragment"
-        android:label="fragment_edit_add_task"
-        tools:layout="@layout/fragment_edit_add_task" />
+        android:label="{title}"
+        tools:layout="@layout/fragment_edit_add_task" >
+        <argument
+            android:name="task"
+            app:argType="com.kseyko.todomvvmroom.data.model.Task"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument android:name="title" />
+    </fragment>
 </navigation>
