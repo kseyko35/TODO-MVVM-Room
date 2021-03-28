@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TODOMVVMRoom">
-        <activity android:name="com.kseyko.todomvvmroom.ui.view.activity.MainActivity">
+        <activity android:name="com.kseyko.todomvvmroom.ui.view.activity.MainActivity"
+            android:windowSoftInputMode="adjustResize"> //with keyboard view rearranged
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
