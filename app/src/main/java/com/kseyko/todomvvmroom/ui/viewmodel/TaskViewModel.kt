@@ -1,10 +1,13 @@
 package com.kseyko.todomvvmroom.ui.viewmodel
 
+import android.view.View
 import androidx.lifecycle.*
 import com.kseyko.todomvvmroom.data.PreferencesManager
 import com.kseyko.todomvvmroom.data.SortOrder
 import com.kseyko.todomvvmroom.data.local.TaskDao
 import com.kseyko.todomvvmroom.data.model.Task
+import com.kseyko.todomvvmroom.ui.view.activity.ADD_TASK_RESULT_OK
+import com.kseyko.todomvvmroom.ui.view.activity.EDIT_TASK_RESULT_OK
 import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -88,10 +91,22 @@ class TaskViewModel @Inject constructor(
         tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
+    fun onAddEditResult(result: Int) {
+        when(result){
+            ADD_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task added")
+            EDIT_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task Updated")
+        }
+    }
+
+    private fun showTaskSavedConfirmationMessage(text: String) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(text))
+    }
+
     sealed class TasksEvent {
         object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen (val task: Task) : TasksEvent()
         data class ShowUndoDeletedTaskMessage(val task: Task) : TasksEvent()
+        data class ShowTaskSavedConfirmationMessage(val msg:String) : TasksEvent()
     }
 
 
