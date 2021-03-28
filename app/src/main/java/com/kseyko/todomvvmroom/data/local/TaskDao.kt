@@ -27,6 +27,10 @@ interface TaskDao {
     @Delete
     suspend fun delete(task: Task)
 
+    @Query("DELETE FROM taskTable where completed= 1")
+    suspend fun deleteCompletedTasks()
+
+
     @Query("SELECT * FROM taskTable where (completed != :hideCompleted or completed=0) and name like '%' || :searchQuery || '%' order by important Desc , name")
     fun getTaskSortedByName(
         searchQuery: String,
@@ -42,7 +46,7 @@ interface TaskDao {
 
     fun getTasks(query: String, sortOrder: SortOrder, hideCompleted: Boolean): Flow<List<Task>> =
         when (sortOrder) {
-            SortOrder.BY_DATE -> getTaskSortedByDateCreated(query,hideCompleted)
-            SortOrder.BY_NAME -> getTaskSortedByName(query,hideCompleted)
+            SortOrder.BY_DATE -> getTaskSortedByDateCreated(query, hideCompleted)
+            SortOrder.BY_NAME -> getTaskSortedByName(query, hideCompleted)
         }
 }
