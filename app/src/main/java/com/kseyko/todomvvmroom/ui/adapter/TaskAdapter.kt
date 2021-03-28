@@ -44,13 +44,12 @@ class TaskAdapter(private val listener: onItemClickListener ) : ListAdapter<Task
                  }
              }
         }
-        fun bind(task: Task) {
-            binding.apply {
+        fun bind(task: Task) = with(binding) {
+
                 checkBoxCompleted.isChecked = task.completed
                 textViewTask.text = task.name
                 textViewTask.paint.isStrikeThruText = task.completed
                 imageViewPriority.isVisible = task.important
-            }
         }
     }
 
